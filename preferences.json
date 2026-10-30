@@ -1,0 +1,51 @@
+[
+  {
+    "type": "separator",
+    "label": "Latte is used when Zen is in light mode. The flavor below applies in dark mode."
+  },
+  {
+    "type": "dropdown",
+    "property": "zenppuccin.dark-flavor",
+    "label": "Dark mode flavor",
+    "defaultValue": "mocha",
+    "options": [
+      { "label": "Frappé", "value": "frappe" },
+      { "label": "Macchiato", "value": "macchiato" },
+      { "label": "Mocha", "value": "mocha" }
+    ]
+  },
+  {
+    "type": "dropdown",
+    "property": "zenppuccin.accent",
+    "label": "Accent color",
+    "defaultValue": "mauve",
+    "options": [
+      { "label": "Rosewater", "value": "rosewater" },
+      { "label": "Flamingo", "value": "flamingo" },
+      { "label": "Pink", "value": "pink" },
+      { "label": "Mauve", "value": "mauve" },
+      { "label": "Red", "value": "red" },
+      { "label": "Maroon", "value": "maroon" },
+      { "label": "Peach", "value": "peach" },
+      { "label": "Yellow", "value": "yellow" },
+      { "label": "Green", "value": "green" },
+      { "label": "Teal", "value": "teal" },
+      { "label": "Sky", "value": "sky" },
+      { "label": "Sapphire", "value": "sapphire" },
+      { "label": "Blue", "value": "blue" },
+      { "label": "Lavender", "value": "lavender" }
+    ]
+  },
+  {
+    "type": "checkbox",
+    "property": "zenppuccin.keep-space-gradients",
+    "label": "Keep Zen's space gradients instead of the flavor background. When off, Zen's Edit Theme dialog has no visible effect.",
+    "defaultValue": false
+  },
+  {
+    "type": "checkbox",
+    "property": "zenppuccin.plain-icons",
+    "label": "Use the text color for toolbar and sidebar icons instead of the accent",
+    "defaultValue": false
+  }
+]

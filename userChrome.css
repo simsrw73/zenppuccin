@@ -5,6 +5,7 @@
  *   zenppuccin.accent                any accent (default mauve)
  *   zenppuccin.keep-space-gradients  true keeps Zen's per-space gradients
  *   zenppuccin.plain-icons           true uses the text color for icons instead of the accent
+ *   zenppuccin.essentials-ring       true draws a 1px ring around Essentials tiles
  * Latte is used in light mode: Zen's browser appearance here, Website Appearance for about: pages.
  */
 
@@ -420,20 +421,49 @@ zen-workspace,
   --tab-background-color-selected: var(--ctp-surface0) !important;
 }
 
-.tabbrowser-tab[zen-essential="true"] .tab-background {
-  --zen-essential-tab-selected-bg: var(--ctp-surface0) !important;
-  --zen-essential-tab-selected-bg-hover: var(--ctp-surface1) !important;
-}
+/* Essentials: base tiles that sit almost flush with the sidebar; the selected tile takes a soft accent tint */
+.tabbrowser-tab[zen-essential="true"] {
+  --ctp-essential-bg: var(--ctp-base);
+  --ctp-essential-bg-hover: var(--ctp-surface0);
+  --ctp-essential-selected: color-mix(in srgb, var(--ctp-accent) 15%, var(--ctp-surface0));
+  --ctp-essential-selected-hover: color-mix(in srgb, var(--ctp-accent) 22%, var(--ctp-surface0));
 
-/* Zen's dark hover is the selected color, which the theme makes the same as the idle color */
-.tabbrowser-tab[zen-essential="true"]:hover {
+  & .tab-background {
+    --zen-essential-tab-selected-bg: var(--ctp-essential-selected) !important;
+    --zen-essential-tab-selected-bg-hover: var(--ctp-essential-selected-hover) !important;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease !important;
+  }
+
   &:not([visuallyselected], [multiselected="true"]) .tab-background {
-    background: var(--zen-toolbar-element-bg-hover) !important;
+    background: var(--ctp-essential-bg) !important;
+  }
+
+  &:not([visuallyselected], [multiselected="true"]):hover .tab-background {
+    background: var(--ctp-essential-bg-hover) !important;
   }
 
   @media not -moz-pref("zen.theme.essentials-favicon-bg") {
     &[visuallyselected] .tab-background {
-      background: var(--ctp-surface1) !important;
+      background: var(--ctp-essential-selected) !important;
+    }
+
+    &[visuallyselected]:hover .tab-background {
+      background: var(--ctp-essential-selected-hover) !important;
+    }
+  }
+
+  /* Optional 1px ring: surface1 when idle, overlay0 on hover, accent when selected */
+  @media -moz-pref("zenppuccin.essentials-ring") {
+    & .tab-background {
+      box-shadow: inset 0 0 0 1px var(--ctp-surface1) !important;
+    }
+
+    &:hover .tab-background {
+      box-shadow: inset 0 0 0 1px var(--ctp-overlay0) !important;
+    }
+
+    &[visuallyselected] .tab-background {
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ctp-accent) 60%, transparent) !important;
     }
   }
 }

@@ -47,5 +47,11 @@
     "property": "zenppuccin.plain-icons",
     "label": "Use the text color for toolbar and sidebar icons instead of the accent",
     "defaultValue": false
+  },
+  {
+    "type": "checkbox",
+    "property": "zenppuccin.essentials-ring",
+    "label": "Draw a thin ring around Essentials tiles",
+    "defaultValue": false
   }
 ]

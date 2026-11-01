@@ -468,6 +468,82 @@ zen-workspace,
   }
 }
 
+/*
+ * Space header (the current-space indicator above the tabs). Zen draws it as a bare row that
+ * reads like one more tab, and shows its fold chevron only on hover, in place of the icon.
+ * Here it's a frame-colored bar with the name in text, the icon in
+ * the icon fill, and the chevron always at the trailing edge so the icon and name line up
+ * with the favicons and titles of the tabs below.
+ */
+.zen-current-workspace-indicator {
+  & .zen-current-workspace-indicator-name {
+    color: var(--ctp-text) !important;
+  }
+
+  & .zen-current-workspace-indicator-icon {
+    fill: var(--ctp-icon-fill) !important;
+  }
+
+  /* Zen fills the chevron with currentColor. subtext0: the overlays fall under 3:1 on Latte's crust. */
+  & .zen-current-workspace-indicator-chevron {
+    color: var(--ctp-subtext0) !important;
+    transition: transform 0.1s, color 0.15s ease !important;
+  }
+
+  &:is(:hover, [open="true"]) .zen-current-workspace-indicator-chevron {
+    color: var(--ctp-subtext1) !important;
+  }
+}
+
+:root[zen-sidebar-expanded] .zen-current-workspace-indicator {
+  /* A little air between the Essentials grid and the space's own section */
+  margin-top: 6px !important;
+  /* Own stacking context, so the bar can sit behind the name and the "…" button */
+  isolation: isolate !important;
+
+  /*
+   * The bar is Zen's hover layer (::before), kept filled at rest. Frame color (crust), like
+   * the sidebar's top and bottom button bars: structure, not one more base Essentials tile.
+   */
+  &::before {
+    background: var(--ctp-frame) !important;
+    z-index: -1 !important;
+    transition: background-color 0.15s ease !important;
+  }
+
+  :root:not([zen-unsynced-window]) &:is(:hover, [open="true"])::before {
+    background: var(--ctp-surface0) !important;
+  }
+
+  /* Dissolve Zen's <stack> so the chevron can sit after the name; the icon leads the row */
+  & .zen-current-workspace-indicator-stack:not([zen-emoji-open="true"]) {
+    display: contents !important;
+
+    & .zen-current-workspace-indicator-icon {
+      display: flex !important;
+    }
+
+    &[no-icon="true"] .zen-current-workspace-indicator-icon {
+      display: none !important;
+    }
+
+    /* After the "…" button (order 5), so the chevron stays put when that button appears on hover */
+    & .zen-current-workspace-indicator-chevron {
+      display: none !important;
+      order: 6 !important;
+    }
+  }
+}
+
+/* Only a space with pinned tabs can fold, so only it gets the chevron */
+:root[zen-sidebar-expanded]
+  zen-workspace:is([haspinnedtabs], [collapsedpinnedtabs])
+  .zen-current-workspace-indicator-stack:not([zen-emoji-open="true"])
+  .zen-current-workspace-indicator-chevron {
+  display: flex !important;
+  opacity: 1 !important;
+}
+
 .tabbrowser-tab:is([visuallyselected], [multiselected]) .tab-label {
   color: var(--ctp-text) !important;
 }

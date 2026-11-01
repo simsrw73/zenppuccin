@@ -6,7 +6,8 @@
  *   zenppuccin.keep-space-gradients  true keeps Zen's per-space gradients
  *   zenppuccin.plain-icons           true uses the text color for icons instead of the accent
  *   zenppuccin.essentials-ring       true draws a 1px ring around Essentials tiles
- *   zenppuccin.transparency          true lets the sidebar and title area show the window backdrop
+ *   zenppuccin.translucency          off (default) | subtle | medium | strong: how much of the
+ *                                    window backdrop shows through the sidebar and title area
  * Latte is used in light mode: Zen's browser appearance here, Website Appearance for about: pages.
  */
 
@@ -305,9 +306,19 @@
 /* --- Browser chrome --- */
 
 :root {
+  /*
+   * Glass factors for the "Translucency" option: how much of each color is kept. 1 (solid)
+   * unless a level sets them below. --ctp-glass covers the frame and every surface on it
+   * (tiles, hovers, selected tabs, URL bar); the sidebar paints over the frame, so it keeps less.
+   */
+  --ctp-glass: 1;
+  --ctp-glass-sidebar: 1;
+  /* Hover, pressed and selected fills never go more see-through than Subtle, so they stay visible */
+  --ctp-glass-state: max(var(--ctp-glass), 0.6);
+
   /* Window / sidebar background. Crust, like the title, tab and status bars in Catppuccin for Zed. */
-  --ctp-frame: var(--ctp-crust);
-  --ctp-sidebar: var(--ctp-mantle);
+  --ctp-frame: color-mix(in srgb, var(--ctp-crust) calc(100% * var(--ctp-glass)), transparent);
+  --ctp-sidebar: color-mix(in srgb, var(--ctp-mantle) calc(100% * var(--ctp-glass-sidebar)), transparent);
   --zen-main-browser-background: var(--ctp-frame) !important;
   --zen-main-browser-background-toolbar: var(--ctp-frame) !important;
   --zen-themed-toolbar-bg-transparent: var(--ctp-frame) !important;
@@ -326,20 +337,20 @@
   /* Toolbar buttons */
   --toolbarbutton-icon-fill: var(--ctp-icon-fill) !important;
   --toolbarbutton-icon-fill-attention: var(--ctp-accent) !important;
-  --toolbarbutton-background-color-hover: color-mix(in srgb, var(--ctp-surface1) 60%, transparent) !important;
-  --toolbarbutton-background-color-active: var(--ctp-surface1) !important;
-  --zen-toolbar-element-bg: color-mix(in srgb, var(--ctp-surface0) 70%, transparent) !important;
-  --zen-toolbar-element-bg-hover: color-mix(in srgb, var(--ctp-surface1) 60%, transparent) !important;
+  --toolbarbutton-background-color-hover: color-mix(in srgb, var(--ctp-surface1) calc(60% * var(--ctp-glass-state)), transparent) !important;
+  --toolbarbutton-background-color-active: color-mix(in srgb, var(--ctp-surface1) calc(100% * var(--ctp-glass-state)), transparent) !important;
+  --zen-toolbar-element-bg: color-mix(in srgb, var(--ctp-surface0) calc(70% * var(--ctp-glass)), transparent) !important;
+  --zen-toolbar-element-bg-hover: color-mix(in srgb, var(--ctp-surface1) calc(60% * var(--ctp-glass-state)), transparent) !important;
 
-  /* URL bar */
+  /* URL bar. The resting field sits on the glass; the open (breakout) view stays solid, below. */
   --toolbar-field-color: var(--ctp-text) !important;
   --toolbar-field-focus-color: var(--ctp-text) !important;
-  --toolbar-field-background-color: var(--ctp-surface0) !important;
+  --toolbar-field-background-color: color-mix(in srgb, var(--ctp-surface0) calc(100% * var(--ctp-glass)), transparent) !important;
   --toolbar-field-focus-background-color: var(--ctp-surface0) !important;
   --toolbar-field-border-color: transparent !important;
-  --urlbar-box-bgcolor: var(--ctp-surface0) !important;
-  --urlbar-box-hover-bgcolor: var(--ctp-surface1) !important;
-  --urlbar-box-active-bgcolor: var(--ctp-surface1) !important;
+  --urlbar-box-bgcolor: color-mix(in srgb, var(--ctp-surface0) calc(100% * var(--ctp-glass)), transparent) !important;
+  --urlbar-box-hover-bgcolor: color-mix(in srgb, var(--ctp-surface1) calc(100% * var(--ctp-glass-state)), transparent) !important;
+  --urlbar-box-active-bgcolor: color-mix(in srgb, var(--ctp-surface1) calc(100% * var(--ctp-glass-state)), transparent) !important;
   --urlbar-box-text-color: var(--ctp-text) !important;
   --urlbarView-highlight-background: var(--ctp-surface0) !important;
   --urlbarView-highlight-color: var(--ctp-text) !important;
@@ -347,12 +358,12 @@
   --urlbarView-action-color: var(--ctp-subtext0) !important;
 
   /* Tabs */
-  --tab-background-color-hover: color-mix(in srgb, var(--ctp-surface0) 70%, transparent) !important;
+  --tab-background-color-hover: color-mix(in srgb, var(--ctp-surface0) calc(70% * var(--ctp-glass-state)), transparent) !important;
   --tab-selected-textcolor: var(--ctp-text) !important;
   --zen-pinned-separator-color: var(--ctp-surface1) !important;
 
   /* Sidebar notifications, Zen-themed icons */
-  --zen-sidebar-notification-bg: var(--ctp-base) !important;
+  --zen-sidebar-notification-bg: color-mix(in srgb, var(--ctp-base) calc(100% * var(--ctp-glass)), transparent) !important;
   --zen-sidebar-themed-icon-fill: var(--ctp-subtext1) !important;
 
   /* Attention dot on pinned tabs/buttons */
@@ -361,28 +372,39 @@
 
 /* Private windows: crust tinted with the accent, so they're still distinguishable */
 :root[zen-private-window="true"] {
-  --ctp-frame: color-mix(in srgb, var(--ctp-accent) 8%, var(--ctp-crust));
-  --ctp-sidebar: color-mix(in srgb, var(--ctp-accent) 8%, var(--ctp-mantle));
+  --ctp-frame: color-mix(in srgb, color-mix(in srgb, var(--ctp-accent) 8%, var(--ctp-crust)) calc(100% * var(--ctp-glass)), transparent);
+  --ctp-sidebar: color-mix(in srgb, color-mix(in srgb, var(--ctp-accent) 8%, var(--ctp-mantle)) calc(100% * var(--ctp-glass-sidebar)), transparent);
 }
 
 /*
- * "Translucent sidebar and title area" option. The same crust frame and mantle sidebar, let
- * through to the window backdrop, only where Zen itself can be transparent (Mica on Windows,
- * macOS, Linux with zen.widget.linux.transparency) and the OS isn't asking for reduced
- * transparency. The sidebar paints over the frame, so its share is smaller. Blur stays with
- * Zen's own "zen.theme.acrylic-sidebar" pref.
+ * "Translucency" option: sets the glass factors (see --ctp-glass above), only where Zen itself
+ * can be transparent (Mica on Windows, macOS, Linux with zen.widget.linux.transparency) and the
+ * OS isn't asking for reduced transparency. "off", the default, leaves everything solid.
+ * Blur stays with Zen's own "zen.theme.acrylic-sidebar" pref.
  */
-@media -moz-pref("zenppuccin.transparency") and ((-moz-windows-mica) or (-moz-platform: macos) or ((-moz-platform: linux) and -moz-pref("zen.widget.linux.transparency"))) and (not (prefers-reduced-transparency: reduce)) {
-  :root {
-    --ctp-glass-frame: 60%;
-    --ctp-glass-sidebar: 30%;
-    --ctp-frame: color-mix(in srgb, var(--ctp-crust) var(--ctp-glass-frame), transparent);
-    --ctp-sidebar: color-mix(in srgb, var(--ctp-mantle) var(--ctp-glass-sidebar), transparent);
+@media ((-moz-windows-mica) or (-moz-platform: macos) or ((-moz-platform: linux) and -moz-pref("zen.widget.linux.transparency"))) and (not (prefers-reduced-transparency: reduce)) {
+  @media -moz-pref("zenppuccin.translucency", "subtle") {
+    :root { --ctp-glass: 0.6; --ctp-glass-sidebar: 0.3; }
   }
 
-  :root[zen-private-window="true"] {
-    --ctp-frame: color-mix(in srgb, color-mix(in srgb, var(--ctp-accent) 8%, var(--ctp-crust)) var(--ctp-glass-frame), transparent);
-    --ctp-sidebar: color-mix(in srgb, color-mix(in srgb, var(--ctp-accent) 8%, var(--ctp-mantle)) var(--ctp-glass-sidebar), transparent);
+  @media -moz-pref("zenppuccin.translucency", "medium") {
+    :root { --ctp-glass: 0.4; --ctp-glass-sidebar: 0.2; }
+  }
+
+  /* Frosted glass: a faint flavor tint, mostly backdrop */
+  @media -moz-pref("zenppuccin.translucency", "strong") {
+    :root { --ctp-glass: 0.2; --ctp-glass-sidebar: 0.1; }
+  }
+
+  /*
+   * Windows drops the Mica/Acrylic backdrop behind an inactive window and shows a flat gray
+   * instead, which washes the glass out. Go solid until the window is active again.
+   */
+  @media (-moz-windows-mica) {
+    :root:-moz-window-inactive {
+      --ctp-glass: 1;
+      --ctp-glass-sidebar: 1;
+    }
   }
 }
 
@@ -440,15 +462,15 @@
 
 zen-workspace,
 .tabbrowser-tab {
-  --tab-background-color-selected: var(--ctp-surface0) !important;
+  --tab-background-color-selected: color-mix(in srgb, var(--ctp-surface0) calc(100% * var(--ctp-glass-state)), transparent) !important;
 }
 
 /* Essentials: base tiles that sit almost flush with the sidebar; the selected tile takes a soft accent tint */
 .tabbrowser-tab[zen-essential="true"] {
-  --ctp-essential-bg: var(--ctp-base);
-  --ctp-essential-bg-hover: var(--ctp-surface0);
-  --ctp-essential-selected: color-mix(in srgb, var(--ctp-accent) 15%, var(--ctp-surface0));
-  --ctp-essential-selected-hover: color-mix(in srgb, var(--ctp-accent) 22%, var(--ctp-surface0));
+  --ctp-essential-bg: color-mix(in srgb, var(--ctp-base) calc(100% * var(--ctp-glass)), transparent);
+  --ctp-essential-bg-hover: color-mix(in srgb, var(--ctp-surface0) calc(100% * var(--ctp-glass-state)), transparent);
+  --ctp-essential-selected: color-mix(in srgb, color-mix(in srgb, var(--ctp-accent) 15%, var(--ctp-surface0)) calc(100% * var(--ctp-glass-state)), transparent);
+  --ctp-essential-selected-hover: color-mix(in srgb, color-mix(in srgb, var(--ctp-accent) 22%, var(--ctp-surface0)) calc(100% * var(--ctp-glass-state)), transparent);
 
   & .tab-background {
     --zen-essential-tab-selected-bg: var(--ctp-essential-selected) !important;
@@ -534,7 +556,7 @@ zen-workspace,
   }
 
   :root:not([zen-unsynced-window]) &:is(:hover, [open="true"])::before {
-    background: var(--ctp-surface0) !important;
+    background: color-mix(in srgb, var(--ctp-surface0) calc(100% * var(--ctp-glass-state)), transparent) !important;
   }
 
   /* Dissolve Zen's <stack> so the chevron can sit after the name; the icon leads the row */
@@ -583,9 +605,10 @@ zen-workspace,
   outline-color: var(--ctp-surface1) !important;
 }
 
+/* Resting field on the glass; the open view above stays solid base */
 #urlbar:not([breakout-extend]) .urlbar-background {
-  --zen-urlbar-background-base: var(--ctp-surface0) !important;
-  --zen-urlbar-background-transparent: var(--ctp-surface0) !important;
+  --zen-urlbar-background-base: color-mix(in srgb, var(--ctp-surface0) calc(100% * var(--ctp-glass)), transparent) !important;
+  --zen-urlbar-background-transparent: color-mix(in srgb, var(--ctp-surface0) calc(100% * var(--ctp-glass)), transparent) !important;
   outline-color: transparent !important;
 }
 

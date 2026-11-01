@@ -55,9 +55,15 @@
     "defaultValue": false
   },
   {
-    "type": "checkbox",
-    "property": "zenppuccin.transparency",
-    "label": "Make the sidebar and title area translucent, in the flavor's colors. Needs Zen's window transparency: Mica on Windows 11, macOS, or Linux with transparency turned on.",
-    "defaultValue": false
+    "type": "dropdown",
+    "property": "zenppuccin.translucency",
+    "label": "Sidebar and title area translucency (needs Zen's window transparency: Mica on Windows 11, macOS, or Linux with transparency turned on)",
+    "defaultValue": "off",
+    "options": [
+      { "label": "Off", "value": "off" },
+      { "label": "Subtle", "value": "subtle" },
+      { "label": "Medium", "value": "medium" },
+      { "label": "Strong", "value": "strong" }
+    ]
   }
 ]

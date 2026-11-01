@@ -19,6 +19,8 @@ Open the mod's options in Sine to choose:
 - **Accent color:** any of the 14 Catppuccin accents (default Mauve).
 - **Keep space gradients:** keeps Zen's per-space gradient backgrounds instead of the theme's. While it's off, Zen's **Edit Theme** dialog has no visible effect.
 - **Plain icons:** uses the text color for toolbar and sidebar icons instead of the accent.
+- **Essentials ring:** draws a thin ring around Essentials tiles.
+- **Translucent sidebar and title area:** keeps the flavor's colors but lets the window backdrop show through, like Zen's own transparency. It needs Mica on Windows 11, macOS, or Linux with Zen's transparency setting on. It has no effect when your system asks for reduced transparency. For blur, also turn on Zen's `zen.theme.acrylic-sidebar` in `about:config`.
 
 ## Light and dark mode
 

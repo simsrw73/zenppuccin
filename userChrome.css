@@ -6,6 +6,7 @@
  *   zenppuccin.keep-space-gradients  true keeps Zen's per-space gradients
  *   zenppuccin.plain-icons           true uses the text color for icons instead of the accent
  *   zenppuccin.essentials-ring       true draws a 1px ring around Essentials tiles
+ *   zenppuccin.transparency          true lets the sidebar and title area show the window backdrop
  * Latte is used in light mode: Zen's browser appearance here, Website Appearance for about: pages.
  */
 
@@ -362,6 +363,27 @@
 :root[zen-private-window="true"] {
   --ctp-frame: color-mix(in srgb, var(--ctp-accent) 8%, var(--ctp-crust));
   --ctp-sidebar: color-mix(in srgb, var(--ctp-accent) 8%, var(--ctp-mantle));
+}
+
+/*
+ * "Translucent sidebar and title area" option. The same crust frame and mantle sidebar, let
+ * through to the window backdrop, only where Zen itself can be transparent (Mica on Windows,
+ * macOS, Linux with zen.widget.linux.transparency) and the OS isn't asking for reduced
+ * transparency. The sidebar paints over the frame, so its share is smaller. Blur stays with
+ * Zen's own "zen.theme.acrylic-sidebar" pref.
+ */
+@media -moz-pref("zenppuccin.transparency") and ((-moz-windows-mica) or (-moz-platform: macos) or ((-moz-platform: linux) and -moz-pref("zen.widget.linux.transparency"))) and (not (prefers-reduced-transparency: reduce)) {
+  :root {
+    --ctp-glass-frame: 60%;
+    --ctp-glass-sidebar: 30%;
+    --ctp-frame: color-mix(in srgb, var(--ctp-crust) var(--ctp-glass-frame), transparent);
+    --ctp-sidebar: color-mix(in srgb, var(--ctp-mantle) var(--ctp-glass-sidebar), transparent);
+  }
+
+  :root[zen-private-window="true"] {
+    --ctp-frame: color-mix(in srgb, color-mix(in srgb, var(--ctp-accent) 8%, var(--ctp-crust)) var(--ctp-glass-frame), transparent);
+    --ctp-sidebar: color-mix(in srgb, color-mix(in srgb, var(--ctp-accent) 8%, var(--ctp-mantle)) var(--ctp-glass-sidebar), transparent);
+  }
 }
 
 @media not (-moz-pref("zenppuccin.keep-space-gradients")) {

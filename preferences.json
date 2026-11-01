@@ -53,5 +53,11 @@
     "property": "zenppuccin.essentials-ring",
     "label": "Draw a thin ring around Essentials tiles",
     "defaultValue": false
+  },
+  {
+    "type": "checkbox",
+    "property": "zenppuccin.transparency",
+    "label": "Make the sidebar and title area translucent, in the flavor's colors. Needs Zen's window transparency: Mica on Windows 11, macOS, or Linux with transparency turned on.",
+    "defaultValue": false
   }
 ]

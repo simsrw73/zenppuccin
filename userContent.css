@@ -290,7 +290,8 @@
     --color-accent-primary: var(--ctp-accent-ink) !important;
     --color-accent-primary-hover: var(--ctp-accent-hover) !important;
     --color-accent-primary-active: var(--ctp-accent-active) !important;
-    --text-color-accent-primary-selected: var(--ctp-on-accent) !important;
+    --color-accent-primary-selected: var(--ctp-selected) !important;
+    --text-color-accent-primary-selected: var(--ctp-on-selected) !important;
     --focus-outline-color: var(--ctp-accent-mark) !important;
     --link-color: var(--ctp-link) !important;
     --link-color-hover: var(--ctp-link-hover) !important;

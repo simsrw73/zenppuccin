@@ -185,11 +185,64 @@
     :root { --ctp-accent: var(--ctp-lavender); }
   }
 
+  /*
+   * Accent roles. By default they're all the accent itself; the high-contrast Latte option
+   * (zenppuccin.latte-contrast) splits them so each passes WCAG on Latte's light surfaces.
+   *   ink        accent used as text, or as a fill that carries text (needs 4.5:1)
+   *   mark       accent used as a non-text indicator, like the focus ring (needs 3:1)
+   *   tint       background for selected rows and text selection, with normal text on it
+   *   link       link text; the underline carries the accent when link text is plain
+   */
   :root {
-    --ctp-accent-hover: color-mix(in srgb, var(--ctp-accent) 85%, var(--ctp-text));
-    --ctp-accent-active: color-mix(in srgb, var(--ctp-accent) 70%, var(--ctp-text));
+    --ctp-accent-ink: var(--ctp-accent);
+    --ctp-accent-mark: var(--ctp-accent);
+    --ctp-selected: var(--ctp-accent);
+    --ctp-on-selected: var(--ctp-on-accent);
+    --ctp-link: var(--ctp-accent);
+    --ctp-link-hover: var(--ctp-accent-hover);
+    --ctp-link-active: var(--ctp-accent-active);
+    --ctp-accent-hover: color-mix(in srgb, var(--ctp-accent-ink) 85%, var(--ctp-text));
+    --ctp-accent-active: color-mix(in srgb, var(--ctp-accent-ink) 70%, var(--ctp-text));
     /* Text drawn on top of an accent-colored fill */
     --ctp-on-accent: var(--ctp-crust);
+  }
+
+  /*
+   * High-contrast Latte accents option. Lightness is capped in OKLCH so hue and chroma stay the accent's:
+   * 0.5 gives every Latte accent 4.6:1 or more on base and mantle, with base text on it;
+   * 0.6 gives the focus ring 3:1. Accents already darker than the cap don't change.
+   */
+  @media (-moz-pref("zenppuccin.latte-contrast")) and (not (prefers-color-scheme: dark)) {
+    :root {
+      --ctp-accent-ink: oklch(from var(--ctp-accent) min(l, 0.5) c h);
+      --ctp-accent-mark: oklch(from var(--ctp-accent) min(l, 0.6) c h);
+      --ctp-on-accent: var(--ctp-base);
+      --ctp-selected: color-mix(in srgb, var(--ctp-accent) 22%, var(--ctp-base));
+      --ctp-on-selected: var(--ctp-text);
+      --ctp-link: var(--ctp-text);
+      --ctp-link-hover: var(--ctp-text);
+      --ctp-link-active: var(--ctp-text);
+    }
+
+    /* Links keep the accent in a thick underline */
+    .text-link,
+    a[is="moz-support-link"],
+    a[href]:not([class]) {
+      text-decoration-line: underline !important;
+      text-decoration-color: var(--ctp-accent) !important;
+      text-decoration-thickness: 2px !important;
+      text-underline-offset: 3px !important;
+    }
+
+    :is(.text-link, a[is="moz-support-link"], a[href]:not([class])):hover {
+      text-decoration-color: var(--ctp-accent-ink) !important;
+      text-decoration-thickness: 3px !important;
+    }
+
+    /* Selected list rows: the tint plus an accent bar on the leading edge */
+    richlistitem[selected] {
+      box-shadow: inset 3px 0 0 var(--ctp-accent-ink) !important;
+    }
   }
 
   /*
@@ -221,7 +274,7 @@
     --zen-secondary-btn-color: var(--ctp-text) !important;
 
     /* Buttons (Zen remaps Firefox's button tokens onto these) */
-    --in-content-primary-button-background: var(--ctp-accent) !important;
+    --in-content-primary-button-background: var(--ctp-accent-ink) !important;
     --in-content-primary-button-background-hover: var(--ctp-accent-hover) !important;
     --in-content-primary-button-background-active: var(--ctp-accent-active) !important;
     --in-content-primary-button-text-color: var(--ctp-on-accent) !important;
@@ -234,15 +287,15 @@
     --button-text-color-destructive: var(--ctp-on-accent) !important;
 
     /* Firefox design-system tokens */
-    --color-accent-primary: var(--ctp-accent) !important;
+    --color-accent-primary: var(--ctp-accent-ink) !important;
     --color-accent-primary-hover: var(--ctp-accent-hover) !important;
     --color-accent-primary-active: var(--ctp-accent-active) !important;
     --text-color-accent-primary-selected: var(--ctp-on-accent) !important;
-    --focus-outline-color: var(--ctp-accent) !important;
-    --link-color: var(--ctp-accent) !important;
-    --link-color-hover: var(--ctp-accent-hover) !important;
-    --link-color-active: var(--ctp-accent-active) !important;
-    --link-color-visited: var(--ctp-accent) !important;
+    --focus-outline-color: var(--ctp-accent-mark) !important;
+    --link-color: var(--ctp-link) !important;
+    --link-color-hover: var(--ctp-link-hover) !important;
+    --link-color-active: var(--ctp-link-active) !important;
+    --link-color-visited: var(--ctp-link) !important;
     --text-color: var(--ctp-text) !important;
     --icon-color: var(--ctp-subtext1) !important;
     --background-color-canvas: var(--ctp-base) !important;
@@ -311,16 +364,16 @@
     --in-content-box-border-color: var(--ctp-surface0) !important;
     --in-content-border-color: var(--ctp-surface0) !important;
     --in-content-item-hover: var(--ctp-surface0) !important;
-    --in-content-item-selected: var(--ctp-accent) !important;
-    --in-content-item-selected-text: var(--ctp-on-accent) !important;
+    --in-content-item-selected: var(--ctp-selected) !important;
+    --in-content-item-selected-text: var(--ctp-on-selected) !important;
     --in-content-table-background: var(--ctp-mantle) !important;
-    --in-content-table-header-background: var(--ctp-accent) !important;
-    --in-content-table-header-color: var(--ctp-on-accent) !important;
+    --in-content-table-header-background: var(--ctp-selected) !important;
+    --in-content-table-header-color: var(--ctp-on-selected) !important;
   }
 
   ::selection {
-    background-color: var(--ctp-accent) !important;
-    color: var(--ctp-on-accent) !important;
+    background-color: var(--ctp-selected) !important;
+    color: var(--ctp-on-selected) !important;
   }
 }
 
@@ -346,7 +399,7 @@
     --newtab-button-hover-background: var(--ctp-surface1) !important;
     --newtab-button-active-background: var(--ctp-surface2) !important;
     --newtab-button-text: var(--ctp-text) !important;
-    --newtab-primary-action-background: var(--ctp-accent) !important;
+    --newtab-primary-action-background: var(--ctp-accent-ink) !important;
     --newtab-primary-element-hover-color: var(--ctp-accent-hover) !important;
     --newtab-primary-element-active-color: var(--ctp-accent-active) !important;
     --newtab-primary-element-text-color: var(--ctp-on-accent) !important;
@@ -361,7 +414,14 @@
   }
 
   .card-outer:is(:hover, :focus, .active):not(.placeholder) .card-title {
-    color: var(--ctp-accent) !important;
+    color: var(--ctp-link) !important;
+  }
+
+  @media (-moz-pref("zenppuccin.latte-contrast")) and (not (prefers-color-scheme: dark)) {
+    .card-outer:is(:hover, :focus, .active):not(.placeholder) .card-title {
+      text-decoration: underline 2px var(--ctp-accent) !important;
+      text-underline-offset: 3px !important;
+    }
   }
 
   .top-site-outer .search-topsite {
@@ -418,6 +478,73 @@
   .card {
     --card-background-color: var(--ctp-mantle) !important;
     --card-border-color: var(--ctp-surface0) !important;
+  }
+
+  /*
+   * Sine's search and install boxes: Sine draws them transparent with a 15% white border, which
+   * vanishes on Latte's cards. Give them the input fill and a border that shows on any flavor.
+   */
+  .sineCKSOption-input {
+    background-color: var(--ctp-crust) !important;
+    color: var(--ctp-text) !important;
+    border-color: var(--ctp-overlay0) !important;
+
+    &:hover {
+      border-color: var(--ctp-overlay2) !important;
+    }
+
+    &:focus-visible {
+      border-color: var(--ctp-accent-mark) !important;
+    }
+
+    &::placeholder {
+      color: var(--ctp-subtext0) !important;
+    }
+  }
+
+  /*
+   * Labelled separators in a mod's options dialog read as section headings: Sine draws them
+   * as a label cut into a rule, on a hard-coded #1c1b22 / #fff patch that doesn't match the
+   * dialog. Drop the rule and the patch; unlabelled separators keep their line.
+   */
+  .sineItemPreferenceDialogContent vbox:has(> hr):has(> .separator-label:not(:empty)) {
+    padding: var(--space-xlarge, 24px) 0 var(--space-xsmall, 4px) !important;
+
+    &:first-child {
+      padding-top: 0 !important;
+    }
+
+    > hr {
+      display: none !important;
+    }
+
+    > .separator-label {
+      position: static !important;
+      transform: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: none !important;
+      color: var(--ctp-text) !important;
+      font-weight: 600 !important;
+    }
+  }
+
+  /*
+   * Sine sizes mod dialogs to at least 60vw and pushes each dropdown to the far edge, so on a
+   * large window the label and its control end up a screen apart. Cap the width.
+   */
+  .sineItemPreferenceDialog {
+    min-width: min(60vw, 34rem) !important;
+    max-width: min(96vw, 44rem) !important;
+  }
+
+  .sineItemPreferenceDialogContent {
+    max-width: 100% !important;
+  }
+
+  /* An unlabelled separator's empty label still paints its padded patch over the rule */
+  .sineItemPreferenceDialogContent .separator-label:empty {
+    display: none !important;
   }
 
   /*

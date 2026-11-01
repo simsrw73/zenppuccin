@@ -1,19 +1,7 @@
 [
   {
     "type": "separator",
-    "label": "Latte is used when Zen is in light mode. The flavor below applies in dark mode."
-  },
-  {
-    "type": "dropdown",
-    "property": "zenppuccin.dark-flavor",
-    "label": "Dark mode flavor",
-    "defaultValue": "mocha",
-    "options": [
-      { "label": "Frappé", "value": "frappe" },
-      { "label": "Macchiato", "value": "macchiato" },
-      { "label": "Mocha", "value": "mocha" }
-    ],
-    "placeholder": false
+    "label": "Colors"
   },
   {
     "type": "dropdown",
@@ -39,27 +27,31 @@
     "placeholder": false
   },
   {
-    "type": "checkbox",
-    "property": "zenppuccin.keep-space-gradients",
-    "label": "Keep Zen's space gradients instead of the flavor background. When off, Zen's Edit Theme dialog has no visible effect.",
-    "defaultValue": false
+    "type": "dropdown",
+    "property": "zenppuccin.dark-flavor",
+    "label": "Dark mode flavor",
+    "defaultValue": "mocha",
+    "options": [
+      { "label": "Frappé", "value": "frappe" },
+      { "label": "Macchiato", "value": "macchiato" },
+      { "label": "Mocha", "value": "mocha" }
+    ],
+    "placeholder": false
   },
   {
     "type": "checkbox",
-    "property": "zenppuccin.plain-icons",
-    "label": "Use the text color for toolbar and sidebar icons instead of the accent",
+    "property": "zenppuccin.latte-contrast",
+    "label": "Latte accents: high contrast",
     "defaultValue": false
   },
   {
-    "type": "checkbox",
-    "property": "zenppuccin.essentials-ring",
-    "label": "Draw a thin ring around Essentials tiles",
-    "defaultValue": false
+    "type": "separator",
+    "label": "Background"
   },
   {
     "type": "dropdown",
     "property": "zenppuccin.translucency",
-    "label": "Sidebar and title area translucency (needs Zen's window transparency: Mica on Windows 11, macOS, or Linux with transparency turned on)",
+    "label": "Translucency",
     "defaultValue": "off",
     "options": [
       { "label": "Off", "value": "off" },
@@ -68,5 +60,32 @@
       { "label": "Strong", "value": "strong" }
     ],
     "placeholder": false
+  },
+  {
+    "type": "checkbox",
+    "property": "zenppuccin.keep-space-gradients",
+    "label": "Keep Zen's space gradients",
+    "defaultValue": false
+  },
+  {
+    "type": "separator",
+    "label": "Sidebar"
+  },
+  {
+    "type": "dropdown",
+    "property": "zenppuccin.icon-color",
+    "label": "Toolbar and sidebar icons",
+    "defaultValue": "accent",
+    "options": [
+      { "label": "Accent color", "value": "accent" },
+      { "label": "Text color", "value": "text" }
+    ],
+    "placeholder": false
+  },
+  {
+    "type": "checkbox",
+    "property": "zenppuccin.essentials-ring",
+    "label": "Ring around Essentials tiles",
+    "defaultValue": false
   }
 ]

@@ -4,7 +4,8 @@
  *   zenppuccin.dark-flavor           frappe | macchiato | mocha (default)
  *   zenppuccin.accent                any accent (default mauve)
  *   zenppuccin.keep-space-gradients  true keeps Zen's per-space gradients
- *   zenppuccin.plain-icons           true uses the text color for icons instead of the accent
+ *   zenppuccin.icon-color            accent (default) | text: toolbar and sidebar icon color
+ *   zenppuccin.latte-contrast        true: darker accent shades in Latte that pass WCAG contrast
  *   zenppuccin.essentials-ring       true draws a 1px ring around Essentials tiles
  *   zenppuccin.translucency          off (default) | subtle | medium | strong: how much of the
  *                                    window backdrop shows through the sidebar and title area
@@ -194,17 +195,53 @@
   :root { --ctp-accent: var(--ctp-lavender); }
 }
 
+/*
+ * Accent roles. By default they're all the accent itself; the high-contrast Latte option
+ * (zenppuccin.latte-contrast) splits them so each passes WCAG on Latte's light surfaces.
+ *   ink        accent used as text, or as a fill that carries text (needs 4.5:1)
+ *   mark       accent used as a non-text indicator, like the focus ring (needs 3:1)
+ *   selected   background for text selection, with normal text on it
+ *   link       link text; the underline carries the accent when link text is plain
+ */
 :root {
-  --ctp-accent-hover: color-mix(in srgb, var(--ctp-accent) 85%, var(--ctp-text));
-  --ctp-accent-active: color-mix(in srgb, var(--ctp-accent) 70%, var(--ctp-text));
+  --ctp-accent-ink: var(--ctp-accent);
+  --ctp-accent-mark: var(--ctp-accent);
+  --ctp-selected: var(--ctp-accent);
+  --ctp-on-selected: var(--ctp-on-accent);
+  --ctp-link: var(--ctp-accent);
+  --ctp-link-hover: var(--ctp-accent-hover);
+  --ctp-link-active: var(--ctp-accent-active);
+}
+
+/*
+ * High-contrast Latte accents option, in Latte only (the inverse of the dark-flavor condition above).
+ * Lightness is capped in OKLCH so hue and chroma stay the accent's: 0.5 gives every Latte
+ * accent 4.6:1 or more on base and mantle, with base text on it; 0.6 gives the focus ring 3:1.
+ */
+@media (-moz-pref("zenppuccin.latte-contrast")) and (not (-moz-pref("zen.view.window.scheme", 0))) and (not ((-moz-pref("zen.view.window.scheme", 2)) and (prefers-color-scheme: dark))) {
+  :root {
+    --ctp-accent-ink: oklch(from var(--ctp-accent) min(l, 0.5) c h);
+    --ctp-accent-mark: oklch(from var(--ctp-accent) min(l, 0.6) c h);
+    --ctp-on-accent: var(--ctp-base);
+    --ctp-selected: color-mix(in srgb, var(--ctp-accent) 22%, var(--ctp-base));
+    --ctp-on-selected: var(--ctp-text);
+    --ctp-link: var(--ctp-text);
+    --ctp-link-hover: var(--ctp-text);
+    --ctp-link-active: var(--ctp-text);
+  }
+}
+
+:root {
+  --ctp-accent-hover: color-mix(in srgb, var(--ctp-accent-ink) 85%, var(--ctp-text));
+  --ctp-accent-active: color-mix(in srgb, var(--ctp-accent-ink) 70%, var(--ctp-text));
   /* Text drawn on top of an accent-colored fill */
   --ctp-on-accent: var(--ctp-crust);
   /* Toolbar and sidebar icons */
   --ctp-icon-fill: var(--ctp-accent);
 }
 
-/* "Plain icons" option */
-@media -moz-pref("zenppuccin.plain-icons") {
+/* "Toolbar and sidebar icons" option */
+@media -moz-pref("zenppuccin.icon-color", "text") {
   :root { --ctp-icon-fill: var(--ctp-text); }
 }
 
@@ -237,7 +274,7 @@
   --zen-secondary-btn-color: var(--ctp-text) !important;
 
   /* Buttons (Zen remaps Firefox's button tokens onto these) */
-  --in-content-primary-button-background: var(--ctp-accent) !important;
+  --in-content-primary-button-background: var(--ctp-accent-ink) !important;
   --in-content-primary-button-background-hover: var(--ctp-accent-hover) !important;
   --in-content-primary-button-background-active: var(--ctp-accent-active) !important;
   --in-content-primary-button-text-color: var(--ctp-on-accent) !important;
@@ -250,15 +287,15 @@
   --button-text-color-destructive: var(--ctp-on-accent) !important;
 
   /* Firefox design-system tokens */
-  --color-accent-primary: var(--ctp-accent) !important;
+  --color-accent-primary: var(--ctp-accent-ink) !important;
   --color-accent-primary-hover: var(--ctp-accent-hover) !important;
   --color-accent-primary-active: var(--ctp-accent-active) !important;
   --text-color-accent-primary-selected: var(--ctp-on-accent) !important;
-  --focus-outline-color: var(--ctp-accent) !important;
-  --link-color: var(--ctp-accent) !important;
-  --link-color-hover: var(--ctp-accent-hover) !important;
-  --link-color-active: var(--ctp-accent-active) !important;
-  --link-color-visited: var(--ctp-accent) !important;
+  --focus-outline-color: var(--ctp-accent-mark) !important;
+  --link-color: var(--ctp-link) !important;
+  --link-color-hover: var(--ctp-link-hover) !important;
+  --link-color-active: var(--ctp-link-active) !important;
+  --link-color-visited: var(--ctp-link) !important;
   --text-color: var(--ctp-text) !important;
   --icon-color: var(--ctp-subtext1) !important;
   --background-color-canvas: var(--ctp-base) !important;
@@ -406,6 +443,15 @@
       --ctp-glass-sidebar: 1;
     }
   }
+
+  /*
+   * Compact mode floats the sidebar and toolbar over the page, where there's no window backdrop,
+   * only Zen's gray placeholder (.zen-toolbar-background), so the glass just looks tinted. Go solid.
+   */
+  :root[zen-compact-mode="true"] {
+    --ctp-glass: 1;
+    --ctp-glass-sidebar: 1;
+  }
 }
 
 @media not (-moz-pref("zenppuccin.keep-space-gradients")) {
@@ -419,6 +465,14 @@
     --zen-main-browser-background-toolbar: var(--ctp-frame) !important;
     --zen-main-browser-background-old: var(--ctp-frame) !important;
     --zen-main-browser-background-toolbar-old: var(--ctp-frame) !important;
+  }
+
+  /*
+   * The grain from Edit Theme's texture slider belongs to the space background we replace.
+   * Solid fills used to hide it; with translucency it would show through as noise.
+   */
+  .zen-browser-grain {
+    display: none !important;
   }
 
   /* Zen also writes each space's text color, accent and color scheme onto its <zen-workspace> */
@@ -614,13 +668,13 @@ zen-workspace,
 
 #urlbar-input::selection,
 .searchbar-textbox::selection {
-  background-color: var(--ctp-accent) !important;
-  color: var(--ctp-on-accent) !important;
+  background-color: var(--ctp-selected) !important;
+  color: var(--ctp-on-selected) !important;
 }
 
 .urlbarView-url,
 .urlbarView-row[type="switchtab"] .urlbarView-action {
-  color: var(--ctp-accent) !important;
+  color: var(--ctp-accent-ink) !important;
 }
 
 .urlbarView-row[selected] {

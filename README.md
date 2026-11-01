@@ -15,12 +15,35 @@ A theme for [Zen Browser](https://zen-browser.app/), built on the [Catppuccin](h
 
 Open the mod's options in Sine to choose:
 
-- **Dark mode flavor:** Frappé, Macchiato or Mocha (default). Latte is used in light mode.
+**Colors**
+
 - **Accent color:** any of the 14 Catppuccin accents (default Mauve).
-- **Keep space gradients:** keeps Zen's per-space gradient backgrounds instead of the theme's. While it's off, Zen's **Edit Theme** dialog has no visible effect.
-- **Plain icons:** uses the text color for toolbar and sidebar icons instead of the accent.
-- **Essentials ring:** draws a thin ring around Essentials tiles.
-- **Translucency:** Off (default), Subtle, Medium or Strong. Keeps the flavor's colors but lets the window backdrop show through the sidebar and title area, like Zen's own transparency. It needs Mica on Windows 11, macOS, or Linux with Zen's transparency setting on. It has no effect when your system asks for reduced transparency. For blur, also turn on Zen's `zen.theme.acrylic-sidebar` in `about:config`.
+- **Dark mode flavor:** Frappé, Macchiato or Mocha (default). Light mode always uses Latte.
+- **Latte accents: high contrast:** some Latte accents are too light for text and for buttons with text on them. This uses darker shades of the same hue that pass WCAG contrast, shows links as plain text with an accent underline, and makes selection a soft accent tint. Off by default, which keeps Catppuccin's exact colors. Dark flavors don't change.
+
+**Background**
+
+- **Translucency:** Off (default), Subtle, Medium or Strong. Keeps the flavor's colors but lets the window backdrop show through the sidebar and title area, like Zen's own transparency. It needs Mica on Windows 11, macOS, or Linux with Zen's transparency setting on. It has no effect when your system asks for reduced transparency, when the window is inactive on Windows, or in compact mode. See [Transparency settings](#transparency-settings).
+- **Keep Zen's space gradients:** keeps Zen's per-space gradient backgrounds instead of the theme's. While it's off, Zen's **Edit Theme** dialog has no visible effect.
+
+**Sidebar**
+
+- **Toolbar and sidebar icons:** the accent color (default) or the text color.
+- **Ring around Essentials tiles:** draws a thin ring around Essentials tiles.
+
+## Transparency settings
+
+The Translucency option only decides how much of the flavor color covers the window. What shows through comes from your system and from Zen's own settings, which aren't in Zen's Settings page:
+
+| Setting | Where | What it does |
+| --- | --- | --- |
+| **Transparency effects** | Windows **Settings → Personalization → Colors** | Must be on, or Windows draws no backdrop and the option has no effect. |
+| `widget.windows.mica.toplevel-backdrop` | `about:config` | The Windows backdrop material. `2`, Zen's default, is Acrylic: frosted glass that blurs whatever is behind the window. `1` is Mica: a soft tint taken from your wallpaper, which barely looks transparent. |
+| `zen.theme.acrylic-sidebar` | `about:config` | Zen's own blur behind the sidebar, including the floating sidebar in compact mode. |
+| `zen.theme.acrylic-urlbar` | `about:config` | The same blur behind the open address bar. |
+| `zen.widget.linux.transparency` | `about:config` | Turns on transparency on Linux. |
+
+Restart Zen after changing any of them.
 
 ## Light and dark mode
 

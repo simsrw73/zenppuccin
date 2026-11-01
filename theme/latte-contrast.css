@@ -1,0 +1,25 @@
+/*
+ * Zenppuccin: the "Latte accents: high contrast" option (zenppuccin.latte-contrast).
+ * Imported by userChrome.css and userContent.css only when the option is on and Latte is showing.
+ * Scoped to browser chrome and about: pages so websites never see these variables.
+ *
+ * Lightness is capped in OKLCH so hue and chroma stay the accent's; accents already darker
+ * than a cap don't change.
+ *   0.5   ink: every Latte accent reaches 4.6:1 or more on base and mantle, with base text on it
+ *   0.56  mark: the focus ring and accent icons reach 3:1, on crust too
+ * Links turn plain text (their underline keeps the accent, in userContent.css), selection turns
+ * into a tint, and secondary text moves from subtext0 (4.37:1 on base) to subtext1 (5.5:1).
+ */
+@-moz-document url-prefix("chrome:"), url-prefix("about:") {
+  :root {
+    --ctp-accent-ink: oklch(from var(--ctp-accent) min(l, 0.5) c h);
+    --ctp-accent-mark: oklch(from var(--ctp-accent) min(l, 0.56) c h);
+    --ctp-on-accent: var(--ctp-base);
+    --ctp-selected: color-mix(in srgb, var(--ctp-accent) 22%, var(--ctp-base));
+    --ctp-on-selected: var(--ctp-text);
+    --ctp-link: var(--ctp-text);
+    --ctp-link-hover: var(--ctp-text);
+    --ctp-link-active: var(--ctp-text);
+    --ctp-text-muted: var(--ctp-subtext1);
+  }
+}

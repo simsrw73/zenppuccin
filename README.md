@@ -19,7 +19,7 @@ Open the mod's options in Sine to choose:
 
 - **Accent color:** any of the 14 Catppuccin accents (default Mauve).
 - **Dark mode flavor:** Frappé, Macchiato or Mocha (default). Light mode always uses Latte.
-- **Latte accents: high contrast:** some Latte accents are too light for text and for buttons with text on them. This uses darker shades of the same hue that pass WCAG contrast, shows links as plain text with an accent underline, and makes selection a soft accent tint. Off by default, which keeps Catppuccin's exact colors. Dark flavors don't change.
+- **Latte accents: high contrast:** some Latte accents are too light for text and for buttons with text on them. This uses darker shades of the same hue that pass WCAG contrast for text, buttons, accent icons and the focus ring. It also shows links as plain text with an accent underline, makes selection a soft accent tint, and darkens secondary text slightly. Off by default, which keeps Catppuccin's exact colors. Dark flavors don't change.
 
 **Background**
 

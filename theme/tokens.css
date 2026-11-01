@@ -1,0 +1,185 @@
+/*
+ * Zenppuccin: accent, accent roles and the Zen + Firefox design tokens, shared by the browser
+ * chrome and about: pages. Imported by userChrome.css and userContent.css after a flavor palette.
+ * Scoped to browser chrome and about: pages so websites never see these variables.
+ */
+@-moz-document url-prefix("chrome:"), url-prefix("about:") {
+  /* Accent: from the "Accent color" option, default Mauve */
+  :root {
+    --ctp-accent: var(--ctp-mauve);
+  }
+
+  @media -moz-pref("zenppuccin.accent", "rosewater") {
+    :root { --ctp-accent: var(--ctp-rosewater); }
+  }
+
+  @media -moz-pref("zenppuccin.accent", "flamingo") {
+    :root { --ctp-accent: var(--ctp-flamingo); }
+  }
+
+  @media -moz-pref("zenppuccin.accent", "pink") {
+    :root { --ctp-accent: var(--ctp-pink); }
+  }
+
+  @media -moz-pref("zenppuccin.accent", "red") {
+    :root { --ctp-accent: var(--ctp-red); }
+  }
+
+  @media -moz-pref("zenppuccin.accent", "maroon") {
+    :root { --ctp-accent: var(--ctp-maroon); }
+  }
+
+  @media -moz-pref("zenppuccin.accent", "peach") {
+    :root { --ctp-accent: var(--ctp-peach); }
+  }
+
+  @media -moz-pref("zenppuccin.accent", "yellow") {
+    :root { --ctp-accent: var(--ctp-yellow); }
+  }
+
+  @media -moz-pref("zenppuccin.accent", "green") {
+    :root { --ctp-accent: var(--ctp-green); }
+  }
+
+  @media -moz-pref("zenppuccin.accent", "teal") {
+    :root { --ctp-accent: var(--ctp-teal); }
+  }
+
+  @media -moz-pref("zenppuccin.accent", "sky") {
+    :root { --ctp-accent: var(--ctp-sky); }
+  }
+
+  @media -moz-pref("zenppuccin.accent", "sapphire") {
+    :root { --ctp-accent: var(--ctp-sapphire); }
+  }
+
+  @media -moz-pref("zenppuccin.accent", "blue") {
+    :root { --ctp-accent: var(--ctp-blue); }
+  }
+
+  @media -moz-pref("zenppuccin.accent", "lavender") {
+    :root { --ctp-accent: var(--ctp-lavender); }
+  }
+
+  /*
+   * Accent roles. By default they're all the accent itself; the high-contrast Latte option
+   * (zenppuccin.latte-contrast, see latte-contrast.css) splits them so each passes WCAG on
+   * Latte's light surfaces.
+   *   ink        accent used as text, or as a fill that carries text (needs 4.5:1)
+   *   mark       accent used as a non-text indicator: focus ring, icons (needs 3:1)
+   *   selected   background for selected items and text selection, with on-selected text
+   *   link       link text; the underline carries the accent when link text is plain
+   *   text-muted secondary (deemphasized) text
+   */
+  :root {
+    --ctp-accent-ink: var(--ctp-accent);
+    --ctp-accent-mark: var(--ctp-accent);
+    --ctp-accent-hover: color-mix(in srgb, var(--ctp-accent-ink) 85%, var(--ctp-text));
+    --ctp-accent-active: color-mix(in srgb, var(--ctp-accent-ink) 70%, var(--ctp-text));
+    /* Text drawn on top of an accent-colored fill */
+    --ctp-on-accent: var(--ctp-crust);
+    --ctp-selected: var(--ctp-accent);
+    --ctp-on-selected: var(--ctp-on-accent);
+    --ctp-link: var(--ctp-accent);
+    --ctp-link-hover: var(--ctp-accent-hover);
+    --ctp-link-active: var(--ctp-accent-active);
+    --ctp-text-muted: var(--ctp-subtext0);
+  }
+
+  /*
+   * Shared Zen + Firefox design tokens. Zen loads
+   * zen-theme.css in both the browser chrome and every about: page, so both need them.
+   * User-sheet !important beats Zen's own !important and its inline style.setProperty() values.
+   * Values that differ between the two get overridden in userChrome.css or userContent.css.
+   */
+  :root {
+    color-scheme: var(--ctp-scheme) !important;
+
+    /* Zen core */
+    --zen-primary-color: var(--ctp-accent) !important;
+    --zen-branding-dark: var(--ctp-crust) !important;
+    --zen-branding-paper: var(--ctp-base) !important;
+    --zen-branding-bg: var(--ctp-base) !important;
+    --zen-branding-bg-reverse: var(--ctp-text) !important;
+    --zen-colors-primary: var(--ctp-surface0) !important;
+    --zen-colors-secondary: var(--ctp-surface1) !important;
+    --zen-colors-tertiary: var(--ctp-mantle) !important;
+    --zen-colors-hover-bg: var(--ctp-surface1) !important;
+    --zen-colors-primary-foreground: var(--ctp-text) !important;
+    --zen-colors-border: var(--ctp-surface0) !important;
+    --zen-colors-border-contrast: color-mix(in srgb, var(--ctp-surface1) 50%, transparent) !important;
+    --zen-colors-input-bg: var(--ctp-surface0) !important;
+    --zen-input-border-color: var(--ctp-surface1) !important;
+    --zen-dialog-background: var(--ctp-base) !important;
+    --zen-in-content-dialog-background: var(--ctp-base) !important;
+    --zen-urlbar-background: var(--ctp-surface0) !important;
+    --zen-secondary-btn-color: var(--ctp-text) !important;
+
+    /* Buttons (Zen remaps Firefox's button tokens onto these) */
+    --in-content-primary-button-background: var(--ctp-accent-ink) !important;
+    --in-content-primary-button-background-hover: var(--ctp-accent-hover) !important;
+    --in-content-primary-button-background-active: var(--ctp-accent-active) !important;
+    --in-content-primary-button-text-color: var(--ctp-on-accent) !important;
+    --in-content-accent-color: var(--ctp-accent) !important;
+    --button-text-color: var(--ctp-text) !important;
+    --button-text-color-primary: var(--ctp-on-accent) !important;
+    --button-background-color-destructive: var(--ctp-red) !important;
+    --button-background-color-destructive-hover: color-mix(in srgb, var(--ctp-red) 85%, var(--ctp-text)) !important;
+    --button-background-color-destructive-active: color-mix(in srgb, var(--ctp-red) 70%, var(--ctp-text)) !important;
+    --button-text-color-destructive: var(--ctp-on-accent) !important;
+
+    /* Firefox design-system tokens */
+    --color-accent-primary: var(--ctp-accent-ink) !important;
+    --color-accent-primary-hover: var(--ctp-accent-hover) !important;
+    --color-accent-primary-active: var(--ctp-accent-active) !important;
+    --color-accent-primary-selected: var(--ctp-selected) !important;
+    --text-color-accent-primary-selected: var(--ctp-on-selected) !important;
+    --focus-outline-color: var(--ctp-accent-mark) !important;
+    --link-color: var(--ctp-link) !important;
+    --link-color-hover: var(--ctp-link-hover) !important;
+    --link-color-active: var(--ctp-link-active) !important;
+    --link-color-visited: var(--ctp-link) !important;
+    --text-color: var(--ctp-text) !important;
+    --icon-color: var(--ctp-subtext1) !important;
+    --background-color-canvas: var(--ctp-base) !important;
+    --background-color-box: var(--ctp-mantle) !important;
+    --background-color-box-info: var(--ctp-surface0) !important;
+    --background-color-list-item-hover: color-mix(in srgb, var(--ctp-accent) 20%, transparent) !important;
+    --border-color: var(--ctp-surface1) !important;
+    --border-color-interactive: var(--ctp-surface2) !important;
+    --border-color-deemphasized: var(--ctp-surface0) !important;
+    --input-border-color: var(--ctp-surface1) !important;
+    --table-row-background-color-alternate: var(--ctp-mantle) !important;
+    --text-color-error: var(--ctp-red) !important;
+    --border-color-error: var(--ctp-red) !important;
+    --icon-color-critical: var(--ctp-red) !important;
+    --icon-color-warning: var(--ctp-yellow) !important;
+    --icon-color-success: var(--ctp-green) !important;
+    --icon-color-information: var(--ctp-blue) !important;
+    --background-color-critical: color-mix(in srgb, var(--ctp-red) 18%, var(--ctp-base)) !important;
+    --background-color-warning: color-mix(in srgb, var(--ctp-yellow) 18%, var(--ctp-base)) !important;
+    --background-color-success: color-mix(in srgb, var(--ctp-green) 18%, var(--ctp-base)) !important;
+    --background-color-information: color-mix(in srgb, var(--ctp-blue) 18%, var(--ctp-base)) !important;
+
+    /* Panels, popups, menus */
+    --arrowpanel-background: var(--ctp-base) !important;
+    --arrowpanel-color: var(--ctp-text) !important;
+    --arrowpanel-border-color: var(--ctp-surface0) !important;
+    --panel-background-color: var(--ctp-base) !important;
+    --panel-text-color: var(--ctp-text) !important;
+    --panel-border-color: var(--ctp-surface0) !important;
+    --panel-separator-color: var(--ctp-surface0) !important;
+    --popup-background-color: var(--ctp-base) !important;
+    --popup-border-color: var(--ctp-surface0) !important;
+  }
+
+  /* Container (identity) colors */
+  .identity-color-blue { --identity-tab-color: var(--ctp-blue) !important; --identity-icon-color: var(--ctp-blue) !important; }
+  .identity-color-turquoise { --identity-tab-color: var(--ctp-teal) !important; --identity-icon-color: var(--ctp-teal) !important; }
+  .identity-color-green { --identity-tab-color: var(--ctp-green) !important; --identity-icon-color: var(--ctp-green) !important; }
+  .identity-color-yellow { --identity-tab-color: var(--ctp-yellow) !important; --identity-icon-color: var(--ctp-yellow) !important; }
+  .identity-color-orange { --identity-tab-color: var(--ctp-peach) !important; --identity-icon-color: var(--ctp-peach) !important; }
+  .identity-color-red { --identity-tab-color: var(--ctp-red) !important; --identity-icon-color: var(--ctp-red) !important; }
+  .identity-color-pink { --identity-tab-color: var(--ctp-pink) !important; --identity-icon-color: var(--ctp-pink) !important; }
+  .identity-color-purple { --identity-tab-color: var(--ctp-mauve) !important; --identity-icon-color: var(--ctp-mauve) !important; }
+}

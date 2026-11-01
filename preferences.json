@@ -12,7 +12,8 @@
       { "label": "Frappé", "value": "frappe" },
       { "label": "Macchiato", "value": "macchiato" },
       { "label": "Mocha", "value": "mocha" }
-    ]
+    ],
+    "placeholder": false
   },
   {
     "type": "dropdown",
@@ -34,7 +35,8 @@
       { "label": "Sapphire", "value": "sapphire" },
       { "label": "Blue", "value": "blue" },
       { "label": "Lavender", "value": "lavender" }
-    ]
+    ],
+    "placeholder": false
   },
   {
     "type": "checkbox",
@@ -64,6 +66,7 @@
       { "label": "Subtle", "value": "subtle" },
       { "label": "Medium", "value": "medium" },
       { "label": "Strong", "value": "strong" }
-    ]
+    ],
+    "placeholder": false
   }
 ]

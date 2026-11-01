@@ -550,6 +550,16 @@ zen-workspace,
     }
   }
 
+  /*
+   * Favicons get a soft halo in the text color. CSS can't read an icon's brightness, so every
+   * icon gets it; it's faint on colorful icons and does its work on ones close to the tile face
+   * (a dark logo on Mocha, a light one on Latte). Pending (unloaded) tabs keep Zen's own filter.
+   * The 16px size stays: most sites' stored favicons are too small to scale up without blurring.
+   */
+  &:not([pending], [discarded]) .tab-icon-image {
+    filter: drop-shadow(0 0 1px color-mix(in srgb, var(--ctp-text) 55%, transparent)) !important;
+  }
+
   /* Optional 1px ring: surface1 when idle, overlay0 on hover, accent when selected */
   @media -moz-pref("zenppuccin.essentials-ring") {
     & .tab-background {

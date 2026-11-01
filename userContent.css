@@ -275,6 +275,19 @@
     --panel-separator-color: var(--ctp-surface0) !important;
     --popup-background-color: var(--ctp-base) !important;
     --popup-border-color: var(--ctp-surface0) !important;
+
+    /*
+     * Buttons, row and card-header hovers, inputs. Zen derives these from translucent black/white
+     * and currentColor overlays, which land between palette shades (about:keyboard shows it most).
+     */
+    --button-background-color: var(--ctp-surface0) !important;
+    --button-background-color-hover: var(--ctp-surface1) !important;
+    --button-background-color-active: var(--ctp-surface2) !important;
+    --button-background-color-ghost-hover: var(--ctp-surface0) !important;
+    --button-background-color-ghost-active: var(--ctp-surface1) !important;
+    --card-header-background-color-hover: var(--ctp-surface0) !important;
+    --card-header-background-color-active: var(--ctp-surface1) !important;
+    --input-background-color: var(--ctp-crust) !important;
   }
 
   /* Container (identity) colors */
@@ -361,14 +374,36 @@
 }
 
 /*
- * Zen gives every element squircle corners, but its rule can't reach inside web components, so
- * moz-card's accordion header keeps round corners at the card's radius and hovers as a pill.
+ * Zen gives every element squircle corners and scales every radius up to suit them, but its rule
+ * can't reach inside web components, so their inner hover fills stay round at the scaled radius.
  */
 @-moz-document url-prefix("about:") {
   @media -moz-pref("layout.css.corner-shape.enabled") {
-    moz-card::part(summary) {
-      corner-shape: superellipse(var(--zen-squircle-value));
+    /*
+     * Same problem for the moz-box rows in Settings: the host is a squircle, but its hover fill
+     * (.button, no ::part) stays round at Zen's squircle-scaled radius (8px x 2.3 on Windows), so
+     * it bulges inward from the frame. Square the fill and let the squircle frame clip it: the
+     * host for a lone row, moz-box-group (already overflow: hidden) for grouped rows.
+     */
+    :is(moz-box-button, moz-box-link) {
+      --box-border-radius-inner: 0px !important;
+      overflow: clip !important;
     }
+
+    moz-box-group {
+      --box-border-radius-inner: 0px !important;
+    }
+  }
+
+  /*
+   * moz-card's accordion header (<summary>) takes the card's large radius (16px x the squircle
+   * factor) and hovers as a pill. ::part() doesn't match from user sheets, so go through the
+   * inherited variable: compact radius inside the card, large radius pinned back on the frame.
+   * The header's square bottom corners when expanded come from moz-card's own details[open] rule.
+   */
+  moz-card {
+    --card-border-radius: var(--card-border-radius-compact) !important;
+    border-radius: var(--border-radius-large) !important;
   }
 }
 

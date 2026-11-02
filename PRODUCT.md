@@ -16,18 +16,18 @@ Zenppuccin restyles Zen Browser's own interface with the Catppuccin palette: the
 
 ## Positioning
 
-It's a single Sine mod with live options. Users pick the dark flavor and accent in Sine's option panel, with no separate theme to install for each flavor and accent. It follows both of Zen's appearance settings: Latte in light mode and the chosen flavor in dark mode, for both browser appearance and website appearance. It covers Zen's about: pages as well as the browser window. It goes past a palette swap with opinionated detail work, such as Essentials tiles that sit flush with the sidebar and take an accent tint when selected, private windows tinted with the accent, and per-element icon fill handling. It began as a fork of the official catppuccin/zen-browser theme and isn't an official Catppuccin port.
+It's a single Sine mod with live options. Users pick the dark flavor and accent in Sine's option panel, with no separate theme to install for each flavor and accent. It follows both of Zen's appearance settings: Latte in light mode and the chosen flavor in dark mode, for both browser appearance and website appearance. It covers Zen's about: pages as well as the browser window. Beyond the palette it changes details: Essentials tiles sit flush with the sidebar and take an accent tint when selected, private windows get an accent-tinted frame, and the space header is a bar of its own. It began as a fork of the official catppuccin/zen-browser theme and isn't an official Catppuccin port.
 
 ## Operating Context
 
 - Installed and configured through Sine (**Settings → Sine Mods**). Options are declared in `preferences.json` and read in CSS as `zenppuccin.*` prefs.
 - Zen keeps browser appearance (`zen.view.window.scheme`) and website appearance separate, and the theme has to follow both.
-- Zen's own CSS uses `!important` and inline `style.setProperty()`, so the theme overrides with user-sheet `!important`. Zen's `zen-theme.css` loads in both the browser window and about: pages, so shared tokens go in both sheets.
+- Zen's own CSS uses `!important` and inline `style.setProperty()`, so the theme overrides with user-sheet `!important`. Zen's `zen-theme.css` loads in both the browser window and about: pages, so both sheets import the shared palette and tokens from `theme/`.
 - Zen space gradients and the Edit Theme dialog interact with the theme background (see the keep-space-gradients option).
 
 ## Capabilities and Constraints
 
-- Options: dark flavor (Frappé, Macchiato, Mocha by default), accent (any of the 14 Catppuccin accents, Mauve by default), keep space gradients, plain icons, Essentials ring.
+- Options: accent (any of the 14 Catppuccin accents, Mauve by default), dark flavor (Frappé, Macchiato, Mocha by default), high-contrast Latte accents, translucency, keep space gradients, icon color, Essentials ring.
 - Pure CSS. No scripts, so behavior is limited to what userChrome and userContent selectors and prefs can express.
 - Has to survive Zen and Firefox updates that rename selectors or tokens.
 
@@ -48,7 +48,7 @@ It's a single Sine mod with live options. Users pick the dark flavor and accent 
 2. Readability and accessibility win over fidelity. Where they conflict, bring up alternatives and decide together with the maintainer; never resolve it silently either way.
 3. One install, a few clear options. Each option has to earn its place and work with every flavor and accent.
 4. Respect Zen's model: its two appearance settings, its spaces, and its native affordances stay intact and work as Zen users expect.
-5. Detail is the differentiator: the hover, selected, private and empty states get the same care as the default view.
+5. The hover, selected, private and empty states get the same care as the default view.
 
 ## Accessibility & Inclusion
 

@@ -19,11 +19,11 @@ Open the mod's options in Sine to choose:
 
 - **Accent color:** any of the 14 Catppuccin accents (default Mauve).
 - **Dark mode flavor:** Frappé, Macchiato or Mocha (default). Light mode always uses Latte.
-- **Latte accents: high contrast:** some Latte accents are too light for text and for buttons with text on them. This uses darker shades of the same hue that pass WCAG contrast for text, buttons, accent icons and the focus ring. It also shows links as plain text with an accent underline, makes selection a soft accent tint, and darkens secondary text slightly. Off by default, which keeps Catppuccin's exact colors. Dark flavors don't change.
+- **Latte accents: high contrast:** some Latte accents are too light for text and for buttons with text on them. This uses darker shades of the same hue that pass WCAG contrast for text, buttons, accent icons and the focus ring. It also shows links as plain text with an accent underline, makes selection a soft accent tint, and darkens secondary text slightly. It's off by default, so you get Catppuccin's exact colors, and it doesn't change the dark flavors.
 
 **Background**
 
-- **Translucency:** Off (default), Subtle, Medium or Strong. Keeps the flavor's colors but lets the window backdrop show through the sidebar and title area, like Zen's own transparency. It needs Mica on Windows 11, macOS, or Linux with Zen's transparency setting on. It has no effect when your system asks for reduced transparency, when the window is inactive on Windows, or in compact mode. See [Transparency settings](#transparency-settings).
+- **Translucency:** Off (default), Subtle, Medium or Strong. The sidebar and title area keep the flavor's colors, and the window backdrop shows through them, as with Zen's own transparency. It needs Mica on Windows 11, macOS, or Linux with Zen's transparency setting on. It has no effect when your system asks for reduced transparency, when the window is inactive on Windows, or in compact mode. See [Transparency settings](#transparency-settings).
 - **Keep Zen's space gradients:** keeps Zen's per-space gradient backgrounds instead of the theme's. While it's off, Zen's **Edit Theme** dialog has no visible effect.
 
 **Sidebar**

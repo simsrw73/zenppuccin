@@ -15,7 +15,7 @@ Sine installs the whole repository, so `theme/` arrives next to the two sheets, 
 
 ## Checklist after a Zen or Sine update
 
-The theme depends on Zen's internal markup, class names and variables. None of them are a public API, and a rename quietly drops that part of the theme, with no errors. After an update, check each item in light and dark mode, and search Zen's source for any name that has stopped matching.
+The theme depends on Zen's internal markup, class names and variables. None of them are a public API. When Zen renames one, that part of the theme stops applying and nothing reports an error. After an update, check each item in light and dark mode, and search Zen's source for any name that has stopped matching.
 
 ### Browser window (`userChrome.css`)
 

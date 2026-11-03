@@ -1,7 +1,7 @@
 {
   "id": "zenppuccin",
   "name": "Zenppuccin",
-  "description": "A Catppuccin-based theme for Zen Browser. Choose the dark flavor and accent in the mod's options. Latte is used in light mode.",
+  "description": "A theme for Zen Browser, built on Catppuccin. It covers all four flavors, with your choice of accent color and optional translucency.",
   "author": "simsrw73",
   "version": "1.0.0",
   "fork": [

@@ -3,8 +3,14 @@
   "name": "Zenppuccin",
   "description": "A Catppuccin-based theme for Zen Browser. Choose the dark flavor and accent in the mod's options. Latte is used in light mode.",
   "author": "simsrw73",
+  "version": "1.0.0",
+  "fork": [
+    "zen"
+  ],
+  "ai": "yes",
   "homepage": "https://github.com/simsrw73/zenppuccin",
   "readme": "https://raw.githubusercontent.com/simsrw73/zenppuccin/main/README.md",
+  "image": "https://raw.githubusercontent.com/simsrw73/zenppuccin/main/images/zenppuccin.png",
   "tags": [
     "catppuccin",
     "theme"

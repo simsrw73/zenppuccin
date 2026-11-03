@@ -1,3 +1,5 @@
+![Zenppuccin logo: a smiling cat with a bow tie inside a ring of Catppuccin colors](images/zenppuccin.png)
+
 # Zenppuccin
 
 A theme for [Zen Browser](https://zen-browser.app/), built on the [Catppuccin](https://catppuccin.com/) palette and installed with the [Sine](https://github.com/CosmoCreeper/Sine) mod manager. It isn't an official Catppuccin port.

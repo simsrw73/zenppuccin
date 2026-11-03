@@ -2,7 +2,16 @@
 
 # Zenppuccin
 
-A theme for [Zen Browser](https://zen-browser.app/), built on the [Catppuccin](https://catppuccin.com/) palette and installed with the [Sine](https://github.com/CosmoCreeper/Sine) mod manager. It isn't an official Catppuccin port.
+A theme for [Zen Browser](https://zen-browser.app/), built on the [Catppuccin](https://catppuccin.com/) palettes and installable with the [Sine](https://github.com/CosmoCreeper/Sine) mod manager. It covers all four flavors, with your choice of accent color and optional translucency.
+
+This is not an official Catppuccin port.
+
+## Goals
+
+1. Catppuccin applied consistently across Zen's window, components and settings pages. By default, every color comes from the palette.
+2. Your choice of dark flavor (Frappé, Macchiato or Mocha; Latte in light mode), accent color and translucency.
+3. Better contrast where Catppuccin falls short of WCAG, mainly Latte's light accents. Where we can, we raise contrast without leaving the palette. The optional high-contrast Latte setting does leave it: it darkens accents while keeping their hue and saturation.
+4. CSS only. No scripts.
 
 ## Install
 

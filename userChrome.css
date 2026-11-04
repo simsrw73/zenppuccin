@@ -255,6 +255,19 @@
 }
 
 /*
+ * Reload with no tab open (issue #1). Firefox never shows reload as disabled, because it only
+ * disables it for a moment as it appears. Zen's empty window keeps it disabled, so it looked
+ * live but did nothing. Dim it like other disabled buttons, only in that state.
+ */
+:root[zen-has-empty-tab="true"] #reload-button[disabled] {
+  opacity: var(--toolbarbutton-opacity-disabled) !important;
+
+  &:hover > .toolbarbutton-icon {
+    background-color: transparent !important;
+  }
+}
+
+/*
  * Remote control running: Firefox tints the icon "success" and adds a blue dot (a fixed-color
  * SVG). Use green for both; the dot is redrawn as a gradient with the same core and halo.
  */

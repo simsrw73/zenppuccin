@@ -78,19 +78,22 @@
   --zen-toolbar-element-bg-hover: color-mix(in srgb, var(--ctp-surface1) calc(60% * var(--ctp-glass-state)), transparent) !important;
 
   /* URL bar. The resting field sits on the glass; the open (breakout) view stays solid, below. */
-  --toolbar-field-color: var(--ctp-text) !important;
+  --toolbar-field-text-color: var(--ctp-text) !important;
+  --toolbar-field-text-color-focus: var(--ctp-text) !important;
+  /* Old name, still read by the results view for its selected row */
   --toolbar-field-focus-color: var(--ctp-text) !important;
   --toolbar-field-background-color: color-mix(in srgb, var(--ctp-surface0) calc(100% * var(--ctp-glass)), transparent) !important;
-  --toolbar-field-focus-background-color: var(--ctp-surface0) !important;
+  --toolbar-field-background-color-focus: var(--ctp-surface0) !important;
   --toolbar-field-border-color: transparent !important;
-  --urlbar-box-bgcolor: color-mix(in srgb, var(--ctp-surface0) calc(100% * var(--ctp-glass)), transparent) !important;
-  --urlbar-box-hover-bgcolor: color-mix(in srgb, var(--ctp-surface1) calc(100% * var(--ctp-glass-state)), transparent) !important;
-  --urlbar-box-active-bgcolor: color-mix(in srgb, var(--ctp-surface1) calc(100% * var(--ctp-glass-state)), transparent) !important;
+  /* Boxes sit on the field (surface0): search mode chip, identity chip, go and clear buttons */
+  --urlbar-box-background-color: color-mix(in srgb, var(--ctp-surface1) calc(100% * var(--ctp-glass-state)), transparent) !important;
+  --urlbar-box-background-color-focus: color-mix(in srgb, var(--ctp-surface1) calc(100% * var(--ctp-glass-state)), transparent) !important;
+  --urlbar-box-background-color-hover: color-mix(in srgb, var(--ctp-surface2) calc(100% * var(--ctp-glass-state)), transparent) !important;
+  --urlbar-box-background-color-active: color-mix(in srgb, var(--ctp-surface2) calc(100% * var(--ctp-glass-state)), transparent) !important;
   --urlbar-box-text-color: var(--ctp-text) !important;
-  --urlbarView-highlight-background: var(--ctp-surface0) !important;
-  --urlbarView-highlight-color: var(--ctp-text) !important;
-  --urlbarView-separator-color: var(--ctp-surface0) !important;
-  --urlbarView-action-color: var(--ctp-text-muted) !important;
+  --urlbarview-background-color-selected: var(--ctp-surface0) !important;
+  --urlbarview-text-color-selected: var(--ctp-text) !important;
+  --urlbarview-separator-color: var(--ctp-surface0) !important;
 
   /* Tabs */
   --tab-background-color-hover: color-mix(in srgb, var(--ctp-surface0) calc(70% * var(--ctp-glass-state)), transparent) !important;
@@ -242,8 +245,36 @@
 
 /* --- Icons --- */
 
-/* Zen redefines --toolbarbutton-icon-fill on some elements, so also set the fill directly */
-:is(toolbar, #zen-sidebar-top-buttons, #zen-sidebar-foot-buttons) toolbarbutton:not([disabled]) > :is(.toolbarbutton-icon, .toolbarbutton-badge-stack) {
+/*
+ * Zen redefines --toolbarbutton-icon-fill on every .toolbarbutton-1 (currentColor at 70%), which
+ * hides the :root value. Set it back on the buttons, so icons nested in badge stacks, toolbaritems
+ * and toolbarpaletteitems (the optional items in the sidebar's top and bottom bars) follow it too.
+ */
+:is(toolbar, toolbarpaletteitem, #zen-sidebar-top-buttons, #zen-sidebar-foot-buttons) .toolbarbutton-1 {
+  --toolbarbutton-icon-fill: var(--ctp-icon-fill) !important;
+}
+
+/*
+ * Remote control running: Firefox tints the icon "success" and adds a blue dot (a fixed-color
+ * SVG). Use green for both; the dot is redrawn as a gradient with the same core and halo.
+ */
+#remote-control-toolbar-button[remote-control-running] {
+  --toolbarbutton-icon-fill: var(--ctp-green) !important;
+
+  > .toolbarbutton-badge-stack > .toolbarbutton-badge {
+    background: radial-gradient(circle,
+      var(--ctp-green) 2.5px,
+      color-mix(in srgb, var(--ctp-green) 20%, transparent) 2.5px 4px,
+      transparent 4px) !important;
+  }
+}
+
+/*
+ * The library button draws its icon as an animated SVG sprite in a ::before background. The
+ * sprite uses context-fill, so hand it the fill and context properties directly.
+ */
+#zen-library-button .zen-library-sprite::before {
+  -moz-context-properties: fill, fill-opacity;
   fill: var(--ctp-icon-fill) !important;
 }
 
@@ -409,6 +440,11 @@ zen-workspace,
   --zen-urlbar-background-base: color-mix(in srgb, var(--ctp-surface0) calc(100% * var(--ctp-glass)), transparent) !important;
   --zen-urlbar-background-transparent: color-mix(in srgb, var(--ctp-surface0) calc(100% * var(--ctp-glass)), transparent) !important;
   outline-color: transparent !important;
+}
+
+/* Search bar (toolbaritem#search-container). Zen fills it with the box color when focused; match the URL bar instead. */
+#searchbar:focus-within {
+  background: var(--ctp-surface0) !important;
 }
 
 #urlbar-input::selection,

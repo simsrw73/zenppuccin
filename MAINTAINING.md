@@ -31,6 +31,7 @@ The theme depends on Zen's internal markup, class names and variables. None of t
 - [ ] **Content canvas:** a tab shows base, not white or gray, before its page paints; Glance's backdrop is base too. Depends on `browser[type="content"][transparent="true"]` inside `#tabbrowser-tabpanels .browserSidebarContainer` and `--zen-transparent-browser-background`.
 - [ ] **Glance buttons:** close, expand and split are text-colored circles with crust icons; close turns red while asking to confirm. Depends on `.zen-glance-sidebar-container`, `.zen-glance-sidebar-close` and `[waitconfirmation]`.
 - [ ] **Address bar:** the resting field on the frame, and the solid open view. Depends on `--zen-urlbar-background-base` and `--zen-urlbar-background-transparent`.
+- [ ] **Search bar** (`#search-container`): text, surface0 field, surface1 chips and buttons, surface0 when focused. Depends on `--toolbar-field-text-color*`, `--toolbar-field-background-color*`, `--urlbar-box-background-color*` and `--urlbarview-*`. Firefox renamed these once already (`--toolbar-field-color`, `--urlbar-box-bgcolor`, `--urlbarView-*`), and the old names failed silently.
 - [ ] **Translucency** (Medium, on Windows with Mica):
   - It shows through in an active window.
   - It goes solid when the window is inactive, and in compact mode (`[zen-compact-mode="true"]`).

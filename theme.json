@@ -3,7 +3,7 @@
   "name": "Zenppuccin",
   "description": "A Catppuccin theme for Zen. Includes all four flavors, with your choice of accent color and optional translucency.",
   "author": "simsrw73",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "fork": [
     "zen"
   ],

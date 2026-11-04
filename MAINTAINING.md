@@ -28,6 +28,8 @@ The theme depends on Zen's internal markup, class names and variables. None of t
   - `[zen-sidebar-expanded]`
 - [ ] **Essentials:** base-colored tiles, a soft accent tint on the selected tile, the optional ring, and the icon halo. Depends on `.tabbrowser-tab[zen-essential="true"]`, `--zen-essential-tab-selected-bg*` and `zen.theme.essentials-favicon-bg`.
 - [ ] **Sidebar top and bottom bars** match the sidebar. Depends on `#zen-sidebar-top-buttons` and `#zen-sidebar-foot-buttons`.
+- [ ] **Content canvas:** a tab shows base, not white or gray, before its page paints; Glance's backdrop is base too. Depends on `browser[type="content"][transparent="true"]` inside `#tabbrowser-tabpanels .browserSidebarContainer` and `--zen-transparent-browser-background`.
+- [ ] **Glance buttons:** close, expand and split are text-colored circles with crust icons; close turns red while asking to confirm. Depends on `.zen-glance-sidebar-container`, `.zen-glance-sidebar-close` and `[waitconfirmation]`.
 - [ ] **Address bar:** the resting field on the frame, and the solid open view. Depends on `--zen-urlbar-background-base` and `--zen-urlbar-background-transparent`.
 - [ ] **Translucency** (Medium, on Windows with Mica):
   - It shows through in an active window.

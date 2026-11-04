@@ -203,6 +203,43 @@
   color-scheme: var(--ctp-scheme) !important;
 }
 
+/*
+ * Content area canvas, seen before a page paints. Zen hard-codes white / rgb(32, 32, 32) for tabs,
+ * and a white wash (--zen-transparent-browser-background) for transparent browsers: Glance,
+ * the sidebar browser, extension panels. Both get base; transparent ones keep the sidebar's glass.
+ */
+#tabbrowser-tabpanels .browserSidebarContainer {
+  --zen-transparent-browser-background: color-mix(in srgb, var(--ctp-base) calc(100% * var(--ctp-glass-sidebar)), transparent) !important;
+
+  & browser[type="content"]:not([transparent="true"]) {
+    background: var(--ctp-base) !important;
+  }
+}
+
+/*
+ * Glance's close, expand and split buttons. Zen inverts them against the window (near-white in
+ * dark mode); keep that with text circles and crust icons, and red when close asks to confirm.
+ */
+.zen-glance-sidebar-container toolbarbutton {
+  background: var(--ctp-text) !important;
+  color: var(--ctp-crust) !important;
+  fill: var(--ctp-crust) !important;
+
+  &:hover {
+    background: var(--ctp-subtext1) !important;
+  }
+
+  &.zen-glance-sidebar-close[waitconfirmation] {
+    background: var(--ctp-red) !important;
+    color: var(--ctp-on-accent) !important;
+    fill: var(--ctp-on-accent) !important;
+
+    & label {
+      color: var(--ctp-on-accent) !important;
+    }
+  }
+}
+
 /* --- Icons --- */
 
 /* Zen redefines --toolbarbutton-icon-fill on some elements, so also set the fill directly */

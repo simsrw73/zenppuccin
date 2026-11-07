@@ -65,6 +65,18 @@ Zen has two separate light and dark settings, and the theme follows both:
 | **Browser appearance** | The browser window: sidebar, tabs, menus and address bar | Right-click the tab sidebar, select **Edit Theme**, and use the auto, light and dark icons at the top. |
 | **Website appearance** | Web pages and Zen's own pages, such as Settings and the new tab page | **Settings → Website appearance** |
 
+## Related
+
+Zenppuccin is the browser theme in my own setup. These are the projects around it:
+
+- **[dotfiles-windows](https://github.com/simsrw73/dotfiles-windows)**: My whole Windows setup, managed with chezmoi: `~/.config`, the PowerShell profile, apps, keys and secrets. The other projects here are either used by it or published from it.
+- **[catelier](https://github.com/simsrw73/catelier)**: A Catppuccin theme for the yasb status bar, in all four flavors with your choice of accent. It's the bar in w11dwm-config and dotfiles-windows.
+- **[w11dwm-config](https://github.com/simsrw73/w11dwm-config)**: The keyboard-driven tiling desktop (komorebi, AutoHotkey, yasb, Flow Launcher, wpm), copied out of dotfiles-windows to share and discuss. Its key bindings, app launcher and window switcher are built on Legend.ahk.
+- **[Legend.ahk](https://github.com/simsrw73/Legend.ahk)**: An AutoHotkey v2 library: an Alt+/ overlay of the shortcuts for the app you're in, which-key style chord menus, pickers and a window switcher. It runs the keys in w11dwm-config and dotfiles-windows.
+- **[DotForge](https://github.com/simsrw73/DotForge)**: A PowerShell module that installs and configures command-line tools: XDG paths, fzf pickers, completions, shell hooks. The PowerShell profile in dotfiles-windows loads it, and it sets up Starship to read the starship-p9cat config.
+- **[starship-p9cat](https://github.com/simsrw73/starship-p9cat)**: A Starship prompt in the powerlevel9k style, in Catppuccin colors. It's the prompt in dotfiles-windows, and a port of the CatPow theme from poshcat.omp.
+- **[poshcat.omp](https://github.com/simsrw73/poshcat.omp)**: Catppuccin themes for Oh My Posh, including CatPow, a powerlevel10k-style theme. It was my prompt before Starship; starship-p9cat carries CatPow over.
+
 ## Credits
 
 Colors are from [Catppuccin](https://github.com/catppuccin/catppuccin). The styles started from [Catppuccin for Zen Browser](https://github.com/catppuccin/zen-browser). Both are MIT-licensed; see [LICENSE](LICENSE).
